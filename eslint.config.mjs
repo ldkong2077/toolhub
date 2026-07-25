@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // 构建脚本（Node ESM），不属于前端源码，跳过 lint
     "scripts/**",
+    // 本地归档目录（含旧构建产物 / node_modules / .next 副本），不参与源码检查
+    "reference/**",
   ]),
 ]);
 

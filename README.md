@@ -77,6 +77,24 @@ npm run build:static
   ```
 - **GitHub Pages** — 暂不支持自定义响应头，建议改用上述支持 `_headers` 的托管或前置 CDN。
 
+## 容器化部署（Docker）
+
+仓库已内置 `Dockerfile` 与 `nginx.conf`，可直接构建镜像并运行：
+
+```bash
+docker build -t toolhub .
+docker run -d -p 8080:80 toolhub
+# 访问 http://localhost:8080 ，健康探针位于 /healthz
+```
+
+镜像为多阶段构建：先 `npm run build:static` 生成 `out/`，再由 Nginx 托管，并在响应中注入 CSP / X-Frame-Options / HSTS 等安全头。`.dockerignore` 已排除 `node_modules`、`reference/`、`.workbuddy/` 等本地产物，镜像中不会泄露任何机器路径。
+
+## 持续集成与自动部署
+
+- `.github/workflows/build.yml` — 每次 push / PR 自动执行 `npm ci` → 代码检查 → 类型检查 → 静态构建，并上传 `out/` 产物。
+- `.github/workflows/deploy.yml` — 手动触发（或取消注释 push 触发）一键部署到 GitHub Pages。
+- `.github/dependabot.yml` — 每周自动检查 npm 与 GitHub Actions 依赖更新，便于及时跟进安全补丁。
+
 ## 项目结构
 
 ```

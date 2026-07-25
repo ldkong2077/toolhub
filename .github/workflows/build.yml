@@ -1,0 +1,46 @@
+name: Build & Verify
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Lint · Type-check · Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Build static site
+        run: npm run build:static
+
+      - name: Verify security headers exported
+        run: test -f out/_headers && echo "_headers present" || (echo "ERROR: _headers missing" && exit 1)
+
+      - name: Upload static artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: toolhub-static
+          path: out/
+          if-no-files-found: error

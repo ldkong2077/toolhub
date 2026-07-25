@@ -1,0 +1,21 @@
+# 依赖与构建缓存
+node_modules
+.next
+out
+
+# 非源码 / 本地产物（含可能的机器路径，绝不进镜像）
+reference
+.workbuddy
+.claude
+.github
+
+# 压缩包与系统文件
+*.zip
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+
+# 版本控制
+.git
+.gitignore

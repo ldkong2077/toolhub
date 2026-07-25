@@ -1,0 +1,28 @@
+{
+  "name": "toolhub",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:static": "next build && node scripts/fix-paths.mjs",
+    "start": "npx --yes serve out",
+    "lint": "eslint .",
+    "pack": "npm run build:static && cd out && zip -r ../toolhub.zip . && cd .. && echo 'Packed: toolhub.zip'"
+  },
+  "dependencies": {
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

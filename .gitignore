@@ -42,3 +42,6 @@ next-env.d.ts
 
 # project-internal memory (do not publish)
 .workbuddy/
+
+# local reference / non-source artifacts (not for GitHub)
+reference/

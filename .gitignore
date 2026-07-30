@@ -45,3 +45,12 @@ next-env.d.ts
 
 # local reference / non-source artifacts (not for GitHub)
 reference/
+_private_*/
+参考资料/
+commercial-version/
+node_modules/
+__pycache__/
+venv/
+*.pyc
+.aide/
+package-lock.json
